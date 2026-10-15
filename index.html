@@ -7,45 +7,45 @@
   <title>Atomic Habits Tracker</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    html, body { background-color: #f3f4f6 !important; color: #111827 !important; padding-bottom: 90px; }
-    header { background: #ffffff !important; padding: 16px 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
-    header h1 { font-size: 1.15rem; font-weight: 700; color: #111827 !important; }
-    .date-str { font-size: 0.85rem; color: #4b5563 !important; }
+    body { background-color: #f3f4f6; color: #111827; padding-bottom: 90px; }
+    header { background: #ffffff; padding: 16px 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
+    header h1 { font-size: 1.15rem; font-weight: 700; color: #111827; }
+    .date-str { font-size: 0.85rem; color: #4b5563; }
 
     .container { max-width: 480px; margin: 0 auto; padding: 16px; }
     
-    .card { background: #ffffff !important; border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .card { background: #ffffff; border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
     .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-    .card-title { font-size: 1.05rem; font-weight: 700; color: #111827 !important; }
-    .card-trigger { font-size: 0.8rem; color: #4b5563 !important; margin-top: 2px; }
-    .card-badge { font-size: 0.75rem; padding: 3px 6px; background: #e0e7ff !important; color: #3730a3 !important; border-radius: 4px; font-weight: 600; }
+    .card-title { font-size: 1.05rem; font-weight: 700; color: #111827; }
+    .card-trigger { font-size: 0.8rem; color: #4b5563; margin-top: 2px; }
+    .card-badge { font-size: 0.75rem; padding: 3px 6px; background: #e0e7ff; color: #3730a3; border-radius: 4px; font-weight: 600; }
 
     .action-row { margin-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .btn-check { width: 38px; height: 38px; border-radius: 50%; border: 2px solid #9ca3af; background: #ffffff !important; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; font-weight: bold; }
-    .btn-check.done { background: #10b981 !important; border-color: #10b981; color: #ffffff !important; }
+    .btn-check { width: 38px; height: 38px; border-radius: 50%; border: 2px solid #9ca3af; background: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; font-weight: bold; }
+    .btn-check.done { background: #10b981; border-color: #10b981; color: #ffffff; }
     
     .input-row { display: flex; align-items: center; gap: 6px; }
-    .num-input { width: 75px; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px; text-align: center; font-size: 0.95rem; background: #ffffff !important; color: #111827 !important; }
-    .btn-sm { padding: 8px 12px; background: #2563eb !important; color: #ffffff !important; border: none; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+    .num-input { width: 75px; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px; text-align: center; font-size: 0.95rem; background: #ffffff; color: #111827; }
+    .btn-sm { padding: 8px 12px; background: #2563eb; color: #ffffff; border: none; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
 
-    .progress-container { width: 100%; background: #e5e7eb !important; height: 10px; border-radius: 5px; margin-top: 10px; overflow: hidden; }
-    .progress-bar { height: 100%; background: #2563eb !important; width: 0%; }
-    .progress-meta { display: flex; justify-content: space-between; font-size: 0.8rem; color: #4b5563 !important; margin-top: 4px; }
+    .progress-container { width: 100%; background: #e5e7eb; height: 10px; border-radius: 5px; margin-top: 10px; overflow: hidden; }
+    .progress-bar { height: 100%; background: #2563eb; width: 0%; }
+    .progress-meta { display: flex; justify-content: space-between; font-size: 0.8rem; color: #4b5563; margin-top: 4px; }
 
-    .fab { position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px; background: #2563eb !important; color: #ffffff !important; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: pointer; z-index: 100; }
+    .fab { position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px; background: #2563eb; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: pointer; z-index: 100; }
     
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-end; justify-content: center; z-index: 200; }
     .modal-overlay.active { display: flex; }
-    .modal-content { background: #ffffff !important; color: #111827 !important; width: 100%; max-width: 480px; border-radius: 16px 16px 0 0; padding: 20px; max-height: 85vh; overflow-y: auto; }
+    .modal-content { background: #ffffff; color: #111827; width: 100%; max-width: 480px; border-radius: 16px 16px 0 0; padding: 20px; max-height: 85vh; overflow-y: auto; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-weight: 700; font-size: 1.1rem; }
     .form-group { margin-bottom: 14px; }
-    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #374151 !important; }
-    .form-group input { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.95rem; background: #ffffff !important; color: #111827 !important; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #374151; }
+    .form-group input { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.95rem; background: #ffffff; color: #111827; }
     
     .tab-group { display: flex; gap: 6px; margin-bottom: 14px; }
-    .tab-btn { flex: 1; padding: 9px; border: 1px solid #d1d5db; background: #f9fafb !important; color: #374151 !important; border-radius: 6px; font-size: 0.85rem; cursor: pointer; }
-    .tab-btn.active { background: #2563eb !important; color: #ffffff !important; border-color: #2563eb; font-weight: 600; }
-    .btn-submit { width: 100%; padding: 12px; background: #2563eb !important; color: #ffffff !important; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; }
+    .tab-btn { flex: 1; padding: 9px; border: 1px solid #d1d5db; background: #f9fafb; color: #374151; border-radius: 6px; font-size: 0.85rem; cursor: pointer; }
+    .tab-btn.active { background: #2563eb; color: #ffffff; border-color: #2563eb; font-weight: 600; }
+    .btn-submit { width: 100%; padding: 12px; background: #2563eb; color: #ffffff; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; }
   </style>
 </head>
 <body>
@@ -53,7 +53,7 @@
   <header>
     <div>
       <h1>오늘의 실천</h1>
-      <div class="date-str" id="current-date">로딩 중...</div>
+      <div class="date-str" id="current-date">초기화 중...</div>
     </div>
   </header>
 
@@ -121,11 +121,11 @@
       logs: {}
     };
 
-    var appState = null;
+    var appState = defaultState;
 
     function getStorage() {
       try {
-        var raw = localStorage.getItem('atomic_tracker_db');
+        var raw = localStorage.getItem('atomic_app_v1');
         if (raw) return JSON.parse(raw);
       } catch (err) {}
       return defaultState;
@@ -133,7 +133,7 @@
 
     function setStorage(data) {
       try {
-        localStorage.setItem('atomic_tracker_db', JSON.stringify(data));
+        localStorage.setItem('atomic_app_v1', JSON.stringify(data));
       } catch (err) {}
     }
 
@@ -156,7 +156,7 @@
 
       container.innerHTML = '';
 
-      if (appState.habits.length === 0) {
+      if (!appState.habits || appState.habits.length === 0) {
         container.innerHTML = '<div style="text-align:center; padding: 40px; color: #6b7280;">등록된 습관이 없습니다.<br>우측 하단 [+] 버튼을 눌러 첫 습관을 등록하세요.</div>';
         return;
       }
@@ -181,7 +181,7 @@
             '</div>' +
             '</div>';
         } else if (item.type === 'MILESTONE') {
-          var p = item.project;
+          var p = item.project || { title: '목표 도서', total: 100, current: 0 };
           var pct = Math.min(100, Math.round((p.current / p.total) * 100));
           actionHtml = '<div style="font-size:0.85rem; margin-top:6px; color:#1f2937;">진행 중: <strong>' + p.title + '</strong> (누적 ' + (item.completedCount || 0) + '권 완독)</div>' +
             '<div class="progress-container"><div class="progress-bar" style="width:' + pct + '%"></div></div>' +
@@ -227,4 +227,83 @@
 
     function doMilestone(id) {
       var el = document.getElementById('inp-' + id);
-      var val = parseInt(el.value, 10
+      var val = parseInt(el.value, 10);
+      if (isNaN(val)) return;
+      var habit = appState.habits.find(function(h) { return h.id === id; });
+      if (!habit || !habit.project) return;
+
+      habit.project.current = val;
+      var key = getTodayKey();
+      if (!appState.logs[key]) appState.logs[key] = {};
+      appState.logs[key][id] = { done: true, value: val };
+
+      if (habit.project.current >= habit.project.total) {
+        habit.completedCount = (habit.completedCount || 0) + 1;
+        alert("🎉 축하합니다! 목표를 완독했습니다!");
+        habit.project.current = habit.project.total;
+      }
+
+      setStorage(appState);
+      renderList();
+    }
+
+    function setTab(type) {
+      currentType = type;
+      document.getElementById('tab-bool').className = 'tab-btn' + (type === 'BOOLEAN' ? ' active' : '');
+      document.getElementById('tab-metric').className = 'tab-btn' + (type === 'METRIC_SUM' ? ' active' : '');
+      document.getElementById('tab-stone').className = 'tab-btn' + (type === 'MILESTONE' ? ' active' : '');
+      document.getElementById('metric-fields').style.display = type === 'METRIC_SUM' ? 'block' : 'none';
+      document.getElementById('milestone-fields').style.display = type === 'MILESTONE' ? 'block' : 'none';
+    }
+
+    function addHabit() {
+      var title = document.getElementById('habit-title').value.trim();
+      var trigger = document.getElementById('habit-trigger').value.trim();
+      if (!title) {
+        alert('습관 이름을 입력하세요.');
+        return;
+      }
+
+      var item = { id: 'h_' + Date.now(), title: title, trigger: trigger, type: currentType };
+
+      if (currentType === 'METRIC_SUM') {
+        item.unit = document.getElementById('metric-unit').value.trim() || '회';
+      } else if (currentType === 'MILESTONE') {
+        item.unit = '페이지';
+        var pTitle = document.getElementById('project-title').value.trim() || '목표 도서';
+        var pTotal = parseInt(document.getElementById('project-total').value, 10) || 100;
+        item.project = { title: pTitle, total: pTotal, current: 0 };
+        item.completedCount = 0;
+      }
+
+      appState.habits.push(item);
+      setStorage(appState);
+      document.getElementById('modal-overlay').classList.remove('active');
+      renderList();
+
+      document.getElementById('habit-title').value = '';
+      document.getElementById('habit-trigger').value = '';
+    }
+
+    // Direct Synchronous Execution
+    try {
+      appState = getStorage();
+      initDate();
+      renderList();
+
+      var overlay = document.getElementById('modal-overlay');
+      document.getElementById('open-modal-btn').onclick = function() {
+        overlay.classList.add('active');
+      };
+      document.getElementById('close-modal-btn').onclick = function() {
+        overlay.classList.remove('active');
+      };
+      overlay.onclick = function(e) {
+        if (e.target === overlay) overlay.classList.remove('active');
+      };
+    } catch (e) {
+      document.getElementById('current-date').innerText = '오류: ' + e.message;
+    }
+  </script>
+</body>
+</html>
