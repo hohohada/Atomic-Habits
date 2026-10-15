@@ -22,10 +22,13 @@
     body { background-color: var(--bg); color: var(--text-main); padding-bottom: 95px; }
 
     /* Header */
-    header { background: var(--surface); padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; box-shadow: 0 1px 4px rgba(0,0,0,0.03); }
-    .header-title { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; }
-    .date-str { font-size: 0.85rem; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
-    .tip-btn { border: none; background: #fef3c7; color: #b45309; padding: 8px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    header { background: var(--surface); padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; box-shadow: 0 1px 4px rgba(0,0,0,0.03); }
+    .header-title { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.5px; }
+    .date-str { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
+    .header-actions { display: flex; gap: 6px; }
+    .btn-header { border: none; padding: 6px 10px; border-radius: 16px; font-size: 0.78rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    .btn-tips { background: #fef3c7; color: #b45309; }
+    .btn-preset { background: #e0e7ff; color: #3730a3; }
 
     .container { max-width: 480px; margin: 0 auto; padding: 16px; }
 
@@ -37,29 +40,35 @@
     .card { background: var(--surface); border-radius: 16px; padding: 18px; margin-bottom: 14px; border: 1px solid rgba(226, 232, 240, 0.8); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04); position: relative; }
     .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
     .card-title { font-size: 1.1rem; font-weight: 700; color: var(--text-main); }
-    .card-trigger { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+    .card-trigger { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
     .card-badge { font-size: 0.75rem; padding: 4px 8px; border-radius: 6px; font-weight: 700; }
     .badge-BOOLEAN { background: #e0e7ff; color: #4338ca; }
     .badge-METRIC_SUM { background: #dcfce7; color: #15803d; }
     .badge-MILESTONE { background: #ffedd5; color: #c2410c; }
-    
-    .card-menu-btn { border: none; background: transparent; font-size: 1.1rem; color: var(--text-muted); cursor: pointer; padding: 0 4px; }
+    .card-menu-btn { border: none; background: transparent; font-size: 1.2rem; color: var(--text-muted); cursor: pointer; padding: 0 4px; }
 
-    /* Habit Controls */
+    /* Controls */
     .action-row { margin-top: 14px; display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 10px 14px; border-radius: 12px; }
     .btn-check { width: 42px; height: 42px; border-radius: 50%; border: 2px solid #cbd5e1; background: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.3rem; transition: all 0.2s; }
     .btn-check.done { background: var(--success); border-color: var(--success); color: #fff; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3); }
 
     .input-row { display: flex; align-items: center; gap: 6px; }
-    .num-input { width: 85px; padding: 8px 10px; border: 1.5px solid var(--border); border-radius: 8px; text-align: center; font-size: 0.95rem; font-weight: 600; outline: none; background: #fff; }
+    .num-input { width: 80px; padding: 8px 10px; border: 1.5px solid var(--border); border-radius: 8px; text-align: center; font-size: 0.95rem; font-weight: 600; outline: none; background: #fff; }
     .num-input:focus { border-color: var(--primary); }
     .btn-action { padding: 9px 14px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
 
     /* Milestone Progress */
-    .milestone-box { margin-top: 10px; }
     .progress-bar-bg { width: 100%; background: #e2e8f0; height: 10px; border-radius: 5px; overflow: hidden; margin: 8px 0; }
     .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #4f46e5, #06b6d4); width: 0%; transition: width 0.4s ease; }
     .progress-labels { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+
+    /* Grass Stats */
+    .grass-container { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin: 12px 0 16px 0; }
+    .grass-cell { aspect-ratio: 1; border-radius: 6px; background: #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.65rem; color: #475569; font-weight: 600; }
+    .grass-lvl-0 { background: #e2e8f0; }
+    .grass-lvl-1 { background: #bbf7d0; color: #166534; }
+    .grass-lvl-2 { background: #4ade80; color: #14532d; }
+    .grass-lvl-3 { background: #16a34a; color: #ffffff; }
 
     /* FAB */
     .fab { position: fixed; bottom: 84px; right: 20px; width: 56px; height: 56px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; border: none; box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4); cursor: pointer; z-index: 90; }
@@ -89,14 +98,18 @@
     .btn-submit { width: 100%; padding: 14px; background: var(--primary); color: #fff; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; }
     .btn-delete { width: 100%; padding: 12px; background: #fee2e2; color: var(--danger); border: none; border-radius: 12px; font-size: 0.95rem; font-weight: 700; cursor: pointer; margin-top: 8px; }
 
-    /* Book search UI */
-    .search-row { display: flex; gap: 6px; }
-    .search-btn { padding: 0 14px; background: #334155; color: #fff; border: none; border-radius: 10px; font-weight: 600; font-size: 0.85rem; cursor: pointer; white-space: nowrap; }
+    /* Presets list */
+    .preset-item { border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; }
+    .preset-info-title { font-weight: 700; font-size: 0.95rem; }
+    .preset-info-trigger { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+    .btn-preset-add { padding: 6px 12px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
 
-    /* Tips modal style */
+    /* Tips & Backup */
     .tip-card { background: #f8fafc; border-left: 4px solid var(--primary); padding: 12px; border-radius: 0 10px 10px 0; margin-bottom: 12px; }
     .tip-title { font-weight: 700; font-size: 0.95rem; color: var(--primary); margin-bottom: 4px; }
     .tip-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+    
+    .btn-backup { padding: 12px; border-radius: 10px; border: 1.5px solid var(--border); background: #fff; font-weight: 700; font-size: 0.9rem; cursor: pointer; width: 100%; margin-bottom: 8px; }
   </style>
 </head>
 <body>
@@ -106,20 +119,36 @@
       <div class="header-title">Atomic Tracker</div>
       <div class="date-str" id="current-date">로딩 중...</div>
     </div>
-    <button type="button" class="tip-btn" onclick="openTipsModal()">💡 습관 팁</button>
+    <div class="header-actions">
+      <button type="button" class="btn-header btn-preset" onclick="openPresetModal()">⭐ 추천 습관</button>
+      <button type="button" class="btn-header btn-tips" onclick="openTipsModal()">💡 팁</button>
+    </div>
   </header>
 
-  <!-- Section 1: Today Checklist -->
+  <!-- View 1: Today Checklist -->
   <main class="container view-section active" id="view-today">
     <div id="habit-list"></div>
   </main>
 
-  <!-- Section 2: Stats (Phase 2 Preview) -->
+  <!-- View 2: Stats & Backup -->
   <main class="container view-section" id="view-stats">
     <div class="card">
-      <div class="card-title" style="margin-bottom:8px;">📊 누적 실천 현황</div>
-      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:14px;">기록된 데이터 기반 요약 통계입니다.</p>
+      <div class="card-title">🌱 최근 4주 실천 잔디 (28일)</div>
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">일일 실천 횟수에 따라 색상이 진해집니다.</p>
+      <div class="grass-container" id="grass-grid"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="margin-bottom:8px;">📊 습관별 누적 통계</div>
       <div id="stats-summary" style="display:flex; flex-direction:column; gap:8px;"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="margin-bottom:8px;">💾 데이터 백업 및 복원</div>
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:12px;">휴대폰을 변경할 때 기록을 파일로 내려받아 옮길 수 있습니다.</p>
+      <button type="button" class="btn-backup" onclick="exportData()">📥 백업 파일 다운로드 (.json)</button>
+      <button type="button" class="btn-backup" onclick="document.getElementById('file-input').click()">📤 백업 파일 복원하기</button>
+      <input type="file" id="file-input" style="display:none;" accept=".json" onchange="importData(event)">
     </div>
   </main>
 
@@ -135,7 +164,7 @@
     </button>
   </nav>
 
-  <!-- Habit Form Modal (Add / Edit) -->
+  <!-- Add / Edit Modal -->
   <div class="modal-overlay" id="habit-modal">
     <div class="modal-content modal-box">
       <div class="modal-header">
@@ -174,9 +203,9 @@
       <div id="milestone-fields" style="display: none;">
         <div class="form-group">
           <label>도서명 검색</label>
-          <div class="search-row">
-            <input type="text" id="project-title" placeholder="책 제목을 입력하세요">
-            <button type="button" class="search-btn" onclick="searchBook()">검색</button>
+          <div style="display:flex; gap:6px;">
+            <input type="text" id="project-title" placeholder="책 제목 입력">
+            <button type="button" style="padding:0 14px; background:#334155; color:#fff; border:none; border-radius:10px; font-weight:700;" onclick="searchBook()">검색</button>
           </div>
         </div>
         <div class="form-group">
@@ -190,35 +219,41 @@
     </div>
   </div>
 
-  <!-- Atomic Habits Tips Modal -->
+  <!-- Recommendation Presets Modal -->
+  <div class="modal-overlay" id="preset-modal">
+    <div class="modal-content modal-box">
+      <div class="modal-header">
+        <span>⭐ Atomic Habits 추천 템플릿</span>
+        <button type="button" class="close-btn" onclick="closePresetModal()">✕</button>
+      </div>
+      <div id="preset-list"></div>
+    </div>
+  </div>
+
+  <!-- Tips Modal -->
   <div class="modal-overlay" id="tips-modal">
     <div class="modal-content modal-box">
       <div class="modal-header">
         <span>Atomic Habits 4법칙 가이드</span>
         <button type="button" class="close-btn" onclick="closeTipsModal()">✕</button>
       </div>
-      
-      <div class="tip-card">
-        <div class="tip-title">1. 분명하게 만들어라 (신호)</div>
-        <div class="tip-desc">기존 습관 뒤에 붙이세요. "아침 커피를 내린 후, 책 1페이지를 읽겠다."</div>
-      </div>
-      <div class="tip-card">
-        <div class="tip-title">2. 매력적으로 만들어라 (열망)</div>
-        <div class="tip-desc">하고 싶은 일과 해야 하는 일을 묶으세요. "러닝을 마친 후, 좋아하는 음악/팟캐스트를 듣겠다."</div>
-      </div>
-      <div class="tip-card">
-        <div class="tip-title">3. 하기 쉽게 만들어라 (반응)</div>
-        <div class="tip-desc">2분 규칙을 쓰세요. 시작을 2분 이하로 줄여 저항을 없앱니다. "운동하기 대신 운동복 입기로 시작."</div>
-      </div>
-      <div class="tip-card">
-        <div class="tip-title">4. 만족스럽게 만들어라 (보상)</div>
-        <div class="tip-desc">체크의 쾌감을 즉시 느끼고, "절대로 2번 연속 거르지 않는다"는 원칙을 지키세요.</div>
-      </div>
+      <div class="tip-card"><div class="tip-title">1. 분명하게 만들어라 (신호)</div><div class="tip-desc">기존 습관 뒤에 붙이세요: "아침 커피를 마신 후, 책 1페이지를 읽겠다."</div></div>
+      <div class="tip-card"><div class="tip-title">2. 매력적으로 만들어라 (열망)</div><div class="tip-desc">하고 싶은 행동과 묶으세요: "운동을 마친 후, 좋아하는 유튜브를 보겠다."</div></div>
+      <div class="tip-card"><div class="tip-title">3. 하기 쉽게 만들어라 (반응)</div><div class="tip-desc">2분 규칙을 적용하세요: 시작 단계의 마찰을 극단적으로 줄입니다.</div></div>
+      <div class="tip-card"><div class="tip-title">4. 만족스럽게 만들어라 (보상)</div><div class="tip-desc">체크의 쾌감을 느끼고, "절대 2번 연속 거르지 않는다"를 준수하세요.</div></div>
     </div>
   </div>
 
   <script>
     var currentType = 'BOOLEAN';
+
+    var presets = [
+      { title: '아침 이부자리 정리', trigger: '기상하여 침대에서 발을 딛자마자', type: 'BOOLEAN' },
+      { title: '가벼운 스트레칭', trigger: '기상 후 기지개를 켜며', type: 'METRIC_SUM', unit: '분' },
+      { title: '매일 야외 달리기', trigger: '퇴근 후 운동화 끈을 묶은 직후', type: 'METRIC_SUM', unit: 'km' },
+      { title: '잠들기 전 독서', trigger: '스마트폰을 머리맡 충전기에 꽂은 직후', type: 'MILESTONE', unit: '페이지', project: { title: '아주 작은 습관의 힘', total: 340, current: 0 }, completedCount: 0 },
+      { title: '오늘의 감사 일기 3줄', trigger: '취침 전 침대에 누웠을 때', type: 'BOOLEAN' }
+    ];
 
     var defaultState = {
       habits: [
@@ -233,15 +268,17 @@
 
     function getStorage() {
       try {
-        var raw = localStorage.getItem('atomic_app_v2');
+        var raw = localStorage.getItem('atomic_app_v3');
         if (raw) return JSON.parse(raw);
+        var v2 = localStorage.getItem('atomic_app_v2');
+        if (v2) return JSON.parse(v2);
       } catch (e) {}
       return defaultState;
     }
 
     function setStorage(data) {
       try {
-        localStorage.setItem('atomic_app_v2', JSON.stringify(data));
+        localStorage.setItem('atomic_app_v3', JSON.stringify(data));
       } catch (e) {}
     }
 
@@ -264,7 +301,7 @@
       container.innerHTML = '';
 
       if (!appState.habits || appState.habits.length === 0) {
-        container.innerHTML = '<div style="text-align:center; padding: 50px 20px; color: var(--text-muted); font-size:0.95rem;">등록된 습관이 없습니다.<br>우측 하단 [+] 버튼을 눌러 첫 습관을 만들어보세요.</div>';
+        container.innerHTML = '<div style="text-align:center; padding: 50px 20px; color: var(--text-muted); font-size:0.95rem;">등록된 습관이 없습니다.<br>우측 하단 [+] 또는 상단 추천 템플릿을 눌러보세요.</div>';
         return;
       }
 
@@ -290,8 +327,8 @@
         } else if (item.type === 'MILESTONE') {
           var p = item.project || { title: '목표 도서', total: 100, current: 0 };
           var pct = Math.min(100, Math.round((p.current / p.total) * 100));
-          actionHtml = '<div class="milestone-box">' +
-            '<div style="font-size:0.85rem; font-weight:700;">📖 ' + p.title + ' <span style="font-size:0.75rem; color:var(--primary); font-weight:600;">(완독 ' + (item.completedCount || 0) + '권)</span></div>' +
+          actionHtml = '<div>' +
+            '<div style="font-size:0.85rem; font-weight:700; margin-top:4px;">📖 ' + p.title + ' <span style="font-size:0.75rem; color:var(--primary); font-weight:600;">(완독 ' + (item.completedCount || 0) + '권)</span></div>' +
             '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + pct + '%"></div></div>' +
             '<div class="progress-labels"><span>' + p.current + ' / ' + p.total + ' ' + item.unit + '</span><span>' + pct + '% 진행</span></div>' +
             '<div class="action-row" style="margin-top:10px;">' +
@@ -321,6 +358,30 @@
     }
 
     function renderStats() {
+      // 1. Render 28-day Grass
+      var grid = document.getElementById('grass-grid');
+      grid.innerHTML = '';
+      var today = new Date();
+
+      for (var i = 27; i >= 0; i--) {
+        var d = new Date();
+        d.setDate(today.getDate() - i);
+        var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        var dayLogs = appState.logs[key] || {};
+        
+        var count = 0;
+        for (var hId in dayLogs) {
+          if (dayLogs[hId].done) count++;
+        }
+
+        var lvl = count === 0 ? 0 : count <= 1 ? 1 : count <= 2 ? 2 : 3;
+        var cell = document.createElement('div');
+        cell.className = 'grass-cell grass-lvl-' + lvl;
+        cell.innerText = (d.getMonth() + 1) + '/' + d.getDate();
+        grid.appendChild(cell);
+      }
+
+      // 2. Render Habit Summaries
       var summaryBox = document.getElementById('stats-summary');
       summaryBox.innerHTML = '';
       
@@ -330,11 +391,19 @@
         
         var valText = '';
         if (h.type === 'BOOLEAN') {
-          valText = '매일 실천 관리 중';
+          var totalDays = 0;
+          for (var k in appState.logs) {
+            if (appState.logs[k][h.id] && appState.logs[k][h.id].done) totalDays++;
+          }
+          valText = '총 ' + totalDays + '일 달성';
         } else if (h.type === 'METRIC_SUM') {
-          valText = '단위: ' + h.unit;
+          var sumVal = 0;
+          for (var k in appState.logs) {
+            if (appState.logs[k][h.id] && appState.logs[k][h.id].value) sumVal += appState.logs[k][h.id].value;
+          }
+          valText = '누적 ' + sumVal + ' ' + h.unit;
         } else if (h.type === 'MILESTONE') {
-          valText = '총 ' + (h.completedCount || 0) + '권 완독 달성';
+          valText = '총 ' + (h.completedCount || 0) + '권 완독';
         }
 
         row.innerHTML = '<strong>' + h.title + '</strong><span style="font-size:0.85rem; color:var(--primary); font-weight:700;">' + valText + '</span>';
@@ -385,7 +454,7 @@
       renderList();
     }
 
-    /* Modal & Habit Management */
+    /* Modal & Habit Form */
     function setType(type) {
       currentType = type;
       document.getElementById('t-bool').className = 'tab-btn' + (type === 'BOOLEAN' ? ' active' : '');
@@ -417,7 +486,7 @@
       document.getElementById('edit-habit-id').value = habit.id;
       document.getElementById('habit-title').value = habit.title;
       document.getElementById('habit-trigger').value = habit.trigger || '';
-      document.getElementById('type-select-group').style.display = 'none'; // 유형은 고정
+      document.getElementById('type-select-group').style.display = 'none';
       document.getElementById('delete-btn').style.display = 'block';
 
       setType(habit.type);
@@ -432,9 +501,7 @@
       document.getElementById('habit-modal').classList.add('active');
     }
 
-    function closeHabitModal() {
-      document.getElementById('habit-modal').classList.remove('active');
-    }
+    function closeHabitModal() { document.getElementById('habit-modal').classList.remove('active'); }
 
     function saveHabitForm() {
       var id = document.getElementById('edit-habit-id').value;
@@ -447,7 +514,6 @@
       }
 
       if (id) {
-        // Edit mode
         var target = appState.habits.find(function(h) { return h.id === id; });
         if (target) {
           target.title = title;
@@ -463,7 +529,6 @@
           }
         }
       } else {
-        // Add mode
         var newItem = { id: 'h_' + Date.now(), title: title, trigger: trigger, type: currentType };
         if (currentType === 'METRIC_SUM') {
           newItem.unit = document.getElementById('metric-unit').value.trim() || '회';
@@ -493,45 +558,91 @@
       }
     }
 
-    /* Google Books API for auto page count */
-    function searchBook() {
-      var query = document.getElementById('project-title').value.trim();
-      if (!query) {
-        alert('검색할 도서명을 입력해 주세요.');
-        return;
-      }
+    /* Preset Logic */
+    function openPresetModal() {
+      var list = document.getElementById('preset-list');
+      list.innerHTML = '';
+      presets.forEach(function(p, idx) {
+        var item = document.createElement('div');
+        item.className = 'preset-item';
+        item.innerHTML = '<div><div class="preset-info-title">' + p.title + '</div><div class="preset-info-trigger">⚡ ' + p.trigger + '</div></div>' +
+          '<button type="button" class="btn-preset-add" onclick="addPreset(' + idx + ')">추가</button>';
+        list.appendChild(item);
+      });
+      document.getElementById('preset-modal').classList.add('active');
+    }
+    function closePresetModal() { document.getElementById('preset-modal').classList.remove('active'); }
 
-      var url = 'https://www.googleapis.com/books/v1/volumes?q=' + encodeURIComponent(query) + '&maxResults=1';
-      fetch(url)
+    function addPreset(idx) {
+      var p = presets[idx];
+      var copy = JSON.parse(JSON.stringify(p));
+      copy.id = 'h_' + Date.now();
+      appState.habits.push(copy);
+      setStorage(appState);
+      closePresetModal();
+      renderList();
+      alert("'" + copy.title + "' 습관이 목록에 추가되었습니다.");
+    }
+
+    /* Backup & Restore (JSON) */
+    function exportData() {
+      var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
+      var dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", "atomic_habits_backup_" + getTodayKey() + ".json");
+      document.body.appendChild(dlAnchor);
+      dlAnchor.click();
+      dlAnchor.remove();
+    }
+
+    function importData(e) {
+      var file = e.target.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          var imported = JSON.parse(evt.target.result);
+          if (imported.habits && imported.logs) {
+            appState = imported;
+            setStorage(appState);
+            renderList();
+            renderStats();
+            alert("성공적으로 복원되었습니다.");
+          } else {
+            alert("올바른 백업 파일 형식이 아닙니다.");
+          }
+        } catch (err) {
+          alert("파일을 읽는 중 오류가 발생했습니다.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    /* Book search */
+    function searchBook() {
+      var q = document.getElementById('project-title').value.trim();
+      if (!q) { alert('도서명을 입력하세요.'); return; }
+      fetch('https://www.googleapis.com/books/v1/volumes?q=' + encodeURIComponent(q) + '&maxResults=1')
         .then(function(res) { return res.json(); })
         .then(function(data) {
           if (data.items && data.items.length > 0) {
             var info = data.items[0].volumeInfo;
-            document.getElementById('project-title').value = info.title || query;
+            document.getElementById('project-title').value = info.title || q;
             if (info.pageCount) {
               document.getElementById('project-total').value = info.pageCount;
-              alert('도서 정보 적용 완료: ' + info.title + ' (총 ' + info.pageCount + '페이지)');
-            } else {
-              alert('도서는 찾았으나 페이지 수 정보가 없어 직접 입력이 필요합니다.');
+              alert('도서 정보 반영: ' + info.title + ' (' + info.pageCount + 'p)');
             }
-          } else {
-            alert('일치하는 도서 정보를 찾을 수 없습니다.');
           }
-        })
-        .catch(function() {
-          alert('도서 정보 검색 중 연결 오류가 발생했습니다.');
         });
     }
 
-    /* Tips Modal */
+    /* Modals & Switcher */
     function openTipsModal() { document.getElementById('tips-modal').classList.add('active'); }
     function closeTipsModal() { document.getElementById('tips-modal').classList.remove('active'); }
 
-    /* Tab Switcher */
     function switchTab(viewName) {
       var navItems = document.querySelectorAll('.nav-item');
       navItems.forEach(function(item) { item.classList.remove('active'); });
-
       document.getElementById('view-today').classList.remove('active');
       document.getElementById('view-stats').classList.remove('active');
 
@@ -546,12 +657,11 @@
       }
     }
 
-    // Direct synchronous execution
+    // Init Execution
     try {
       appState = getStorage();
       initDate();
       renderList();
-
       document.getElementById('open-add-btn').onclick = openAddModal;
     } catch (e) {
       document.getElementById('current-date').innerText = '오류: ' + e.message;
