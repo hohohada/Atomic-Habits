@@ -6,84 +6,161 @@
   <meta name="color-scheme" content="light">
   <title>Atomic Habits Tracker</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: #f3f4f6; color: #111827; padding-bottom: 90px; }
-    header { background: #ffffff; padding: 16px 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
-    header h1 { font-size: 1.15rem; font-weight: 700; color: #111827; }
-    .date-str { font-size: 0.85rem; color: #4b5563; }
+    :root {
+      --bg: #f4f6f9;
+      --surface: #ffffff;
+      --primary: #4f46e5;
+      --primary-light: #eef2ff;
+      --success: #10b981;
+      --success-light: #ecfdf5;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --danger: #ef4444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background-color: var(--bg); color: var(--text-main); padding-bottom: 95px; }
+
+    /* Header */
+    header { background: var(--surface); padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; box-shadow: 0 1px 4px rgba(0,0,0,0.03); }
+    .header-title { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; }
+    .date-str { font-size: 0.85rem; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
+    .tip-btn { border: none; background: #fef3c7; color: #b45309; padding: 8px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; }
 
     .container { max-width: 480px; margin: 0 auto; padding: 16px; }
-    
-    .card { background: #ffffff; border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-    .card-title { font-size: 1.05rem; font-weight: 700; color: #111827; }
-    .card-trigger { font-size: 0.8rem; color: #4b5563; margin-top: 2px; }
-    .card-badge { font-size: 0.75rem; padding: 3px 6px; background: #e0e7ff; color: #3730a3; border-radius: 4px; font-weight: 600; }
 
-    .action-row { margin-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .btn-check { width: 38px; height: 38px; border-radius: 50%; border: 2px solid #9ca3af; background: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; font-weight: bold; }
-    .btn-check.done { background: #10b981; border-color: #10b981; color: #ffffff; }
+    /* View Sections */
+    .view-section { display: none; }
+    .view-section.active { display: block; }
+
+    /* Modern Card */
+    .card { background: var(--surface); border-radius: 16px; padding: 18px; margin-bottom: 14px; border: 1px solid rgba(226, 232, 240, 0.8); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04); position: relative; }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+    .card-title { font-size: 1.1rem; font-weight: 700; color: var(--text-main); }
+    .card-trigger { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+    .card-badge { font-size: 0.75rem; padding: 4px 8px; border-radius: 6px; font-weight: 700; }
+    .badge-BOOLEAN { background: #e0e7ff; color: #4338ca; }
+    .badge-METRIC_SUM { background: #dcfce7; color: #15803d; }
+    .badge-MILESTONE { background: #ffedd5; color: #c2410c; }
     
+    .card-menu-btn { border: none; background: transparent; font-size: 1.1rem; color: var(--text-muted); cursor: pointer; padding: 0 4px; }
+
+    /* Habit Controls */
+    .action-row { margin-top: 14px; display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 10px 14px; border-radius: 12px; }
+    .btn-check { width: 42px; height: 42px; border-radius: 50%; border: 2px solid #cbd5e1; background: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.3rem; transition: all 0.2s; }
+    .btn-check.done { background: var(--success); border-color: var(--success); color: #fff; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3); }
+
     .input-row { display: flex; align-items: center; gap: 6px; }
-    .num-input { width: 75px; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px; text-align: center; font-size: 0.95rem; background: #ffffff; color: #111827; }
-    .btn-sm { padding: 8px 12px; background: #2563eb; color: #ffffff; border: none; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+    .num-input { width: 85px; padding: 8px 10px; border: 1.5px solid var(--border); border-radius: 8px; text-align: center; font-size: 0.95rem; font-weight: 600; outline: none; background: #fff; }
+    .num-input:focus { border-color: var(--primary); }
+    .btn-action { padding: 9px 14px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
 
-    .progress-container { width: 100%; background: #e5e7eb; height: 10px; border-radius: 5px; margin-top: 10px; overflow: hidden; }
-    .progress-bar { height: 100%; background: #2563eb; width: 0%; }
-    .progress-meta { display: flex; justify-content: space-between; font-size: 0.8rem; color: #4b5563; margin-top: 4px; }
+    /* Milestone Progress */
+    .milestone-box { margin-top: 10px; }
+    .progress-bar-bg { width: 100%; background: #e2e8f0; height: 10px; border-radius: 5px; overflow: hidden; margin: 8px 0; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #4f46e5, #06b6d4); width: 0%; transition: width 0.4s ease; }
+    .progress-labels { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
 
-    .fab { position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px; background: #2563eb; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: pointer; z-index: 100; }
-    
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-end; justify-content: center; z-index: 200; }
+    /* FAB */
+    .fab { position: fixed; bottom: 84px; right: 20px; width: 56px; height: 56px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; border: none; box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4); cursor: pointer; z-index: 90; }
+
+    /* Bottom Nav */
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 68px; background: var(--surface); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 100; }
+    .nav-item { flex: 1; text-align: center; background: none; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; padding: 8px 0; }
+    .nav-item.active { color: var(--primary); font-weight: 800; }
+    .nav-icon { font-size: 1.35rem; display: block; margin-bottom: 2px; }
+
+    /* Modals */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(2px); display: none; align-items: flex-end; justify-content: center; z-index: 200; }
     .modal-overlay.active { display: flex; }
-    .modal-content { background: #ffffff; color: #111827; width: 100%; max-width: 480px; border-radius: 16px 16px 0 0; padding: 20px; max-height: 85vh; overflow-y: auto; }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-weight: 700; font-size: 1.1rem; }
-    .form-group { margin-bottom: 14px; }
-    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #374151; }
-    .form-group input { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.95rem; background: #ffffff; color: #111827; }
+    .modal-box { background: var(--surface); width: 100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 22px; max-height: 85vh; overflow-y: auto; box-shadow: 0 -8px 24px rgba(0,0,0,0.1); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; font-weight: 800; font-size: 1.15rem; }
+    .close-btn { border: none; background: none; font-size: 1.4rem; color: var(--text-muted); cursor: pointer; }
     
-    .tab-group { display: flex; gap: 6px; margin-bottom: 14px; }
-    .tab-btn { flex: 1; padding: 9px; border: 1px solid #d1d5db; background: #f9fafb; color: #374151; border-radius: 6px; font-size: 0.85rem; cursor: pointer; }
-    .tab-btn.active { background: #2563eb; color: #ffffff; border-color: #2563eb; font-weight: 600; }
-    .btn-submit { width: 100%; padding: 12px; background: #2563eb; color: #ffffff; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 6px; color: var(--text-main); }
+    .form-group input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 0.95rem; outline: none; }
+    .form-group input:focus { border-color: var(--primary); }
+    
+    .tab-group { display: flex; gap: 8px; margin-bottom: 16px; }
+    .tab-btn { flex: 1; padding: 10px; border: 1.5px solid var(--border); background: #f8fafc; color: var(--text-muted); border-radius: 10px; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
+    .tab-btn.active { background: var(--primary-light); color: var(--primary); border-color: var(--primary); }
+    
+    .btn-submit { width: 100%; padding: 14px; background: var(--primary); color: #fff; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; }
+    .btn-delete { width: 100%; padding: 12px; background: #fee2e2; color: var(--danger); border: none; border-radius: 12px; font-size: 0.95rem; font-weight: 700; cursor: pointer; margin-top: 8px; }
+
+    /* Book search UI */
+    .search-row { display: flex; gap: 6px; }
+    .search-btn { padding: 0 14px; background: #334155; color: #fff; border: none; border-radius: 10px; font-weight: 600; font-size: 0.85rem; cursor: pointer; white-space: nowrap; }
+
+    /* Tips modal style */
+    .tip-card { background: #f8fafc; border-left: 4px solid var(--primary); padding: 12px; border-radius: 0 10px 10px 0; margin-bottom: 12px; }
+    .tip-title { font-weight: 700; font-size: 0.95rem; color: var(--primary); margin-bottom: 4px; }
+    .tip-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
   </style>
 </head>
 <body>
 
   <header>
     <div>
-      <h1>오늘의 실천</h1>
-      <div class="date-str" id="current-date">초기화 중...</div>
+      <div class="header-title">Atomic Tracker</div>
+      <div class="date-str" id="current-date">로딩 중...</div>
     </div>
+    <button type="button" class="tip-btn" onclick="openTipsModal()">💡 습관 팁</button>
   </header>
 
-  <main class="container" id="habit-list"></main>
+  <!-- Section 1: Today Checklist -->
+  <main class="container view-section active" id="view-today">
+    <div id="habit-list"></div>
+  </main>
 
-  <button type="button" class="fab" id="open-modal-btn">+</button>
+  <!-- Section 2: Stats (Phase 2 Preview) -->
+  <main class="container view-section" id="view-stats">
+    <div class="card">
+      <div class="card-title" style="margin-bottom:8px;">📊 누적 실천 현황</div>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:14px;">기록된 데이터 기반 요약 통계입니다.</p>
+      <div id="stats-summary" style="display:flex; flex-direction:column; gap:8px;"></div>
+    </div>
+  </main>
 
-  <div class="modal-overlay" id="modal-overlay">
-    <div class="modal-content">
+  <button type="button" class="fab" id="open-add-btn">+</button>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <button type="button" class="nav-item active" onclick="switchTab('today')">
+      <span class="nav-icon">✓</span>오늘의 실천
+    </button>
+    <button type="button" class="nav-item" onclick="switchTab('stats')">
+      <span class="nav-icon">📈</span>실천 통계
+    </button>
+  </nav>
+
+  <!-- Habit Form Modal (Add / Edit) -->
+  <div class="modal-overlay" id="habit-modal">
+    <div class="modal-content modal-box">
       <div class="modal-header">
-        <span>새 습관 등록하기</span>
-        <button type="button" id="close-modal-btn" style="border:none;background:none;font-size:1.4rem;cursor:pointer;">✕</button>
+        <span id="modal-title-text">새 습관 등록</span>
+        <button type="button" class="close-btn" onclick="closeHabitModal()">✕</button>
       </div>
+
+      <input type="hidden" id="edit-habit-id" value="">
 
       <div class="form-group">
         <label>습관 이름</label>
-        <input type="text" id="habit-title" placeholder="예: 매일 러닝, 저녁 독서">
+        <input type="text" id="habit-title" placeholder="예: 매일 러닝, 퇴근 후 독서">
       </div>
 
       <div class="form-group">
-        <label>실천 트리거 (신호)</label>
-        <input type="text" id="habit-trigger" placeholder="예: 퇴근 후 현관문을 열었을 때">
+        <label>실천 신호 (트리거)</label>
+        <input type="text" id="habit-trigger" placeholder="예: 운동화 끈을 묶은 직후">
       </div>
 
-      <div class="form-group">
+      <div class="form-group" id="type-select-group">
         <label>기록 유형</label>
         <div class="tab-group">
-          <button type="button" class="tab-btn active" id="tab-bool" onclick="setTab('BOOLEAN')">단순 체크</button>
-          <button type="button" class="tab-btn" id="tab-metric" onclick="setTab('METRIC_SUM')">수치 누적</button>
-          <button type="button" class="tab-btn" id="tab-stone" onclick="setTab('MILESTONE')">목표 완독</button>
+          <button type="button" class="tab-btn active" id="t-bool" onclick="setType('BOOLEAN')">단순 체크</button>
+          <button type="button" class="tab-btn" id="t-metric" onclick="setType('METRIC_SUM')">수치 누적</button>
+          <button type="button" class="tab-btn" id="t-stone" onclick="setType('MILESTONE')">목표 완독</button>
         </div>
       </div>
 
@@ -96,16 +173,47 @@
 
       <div id="milestone-fields" style="display: none;">
         <div class="form-group">
-          <label>도서명 (목표 프로젝트)</label>
-          <input type="text" id="project-title" placeholder="예: 아주 작은 습관의 힘">
+          <label>도서명 검색</label>
+          <div class="search-row">
+            <input type="text" id="project-title" placeholder="책 제목을 입력하세요">
+            <button type="button" class="search-btn" onclick="searchBook()">검색</button>
+          </div>
         </div>
         <div class="form-group">
           <label>전체 페이지 수</label>
-          <input type="number" id="project-total" placeholder="예: 340">
+          <input type="number" id="project-total" placeholder="자동 검색 또는 직접 입력">
         </div>
       </div>
 
-      <button type="button" class="btn-submit" onclick="addHabit()">저장하고 시작하기</button>
+      <button type="button" class="btn-submit" onclick="saveHabitForm()">저장하기</button>
+      <button type="button" class="btn-delete" id="delete-btn" style="display:none;" onclick="deleteHabit()">이 습관 삭제하기</button>
+    </div>
+  </div>
+
+  <!-- Atomic Habits Tips Modal -->
+  <div class="modal-overlay" id="tips-modal">
+    <div class="modal-content modal-box">
+      <div class="modal-header">
+        <span>Atomic Habits 4법칙 가이드</span>
+        <button type="button" class="close-btn" onclick="closeTipsModal()">✕</button>
+      </div>
+      
+      <div class="tip-card">
+        <div class="tip-title">1. 분명하게 만들어라 (신호)</div>
+        <div class="tip-desc">기존 습관 뒤에 붙이세요. "아침 커피를 내린 후, 책 1페이지를 읽겠다."</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-title">2. 매력적으로 만들어라 (열망)</div>
+        <div class="tip-desc">하고 싶은 일과 해야 하는 일을 묶으세요. "러닝을 마친 후, 좋아하는 음악/팟캐스트를 듣겠다."</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-title">3. 하기 쉽게 만들어라 (반응)</div>
+        <div class="tip-desc">2분 규칙을 쓰세요. 시작을 2분 이하로 줄여 저항을 없앱니다. "운동하기 대신 운동복 입기로 시작."</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-title">4. 만족스럽게 만들어라 (보상)</div>
+        <div class="tip-desc">체크의 쾌감을 즉시 느끼고, "절대로 2번 연속 거르지 않는다"는 원칙을 지키세요.</div>
+      </div>
     </div>
   </div>
 
@@ -114,9 +222,9 @@
 
     var defaultState = {
       habits: [
-        { id: 'h1', title: '아침 찬물 한 잔', trigger: '기상 직후 물 한 컵 마시기', type: 'BOOLEAN' },
+        { id: 'h1', title: '아침 찬물 한 잔', trigger: '기상 직후 부엌으로 갔을 때', type: 'BOOLEAN' },
         { id: 'h2', title: '야외 러닝', trigger: '퇴근 직후 운동화 착용하기', type: 'METRIC_SUM', unit: 'km' },
-        { id: 'h3', title: '독서하기', trigger: '취침 30분 전 스마트폰 끄기', type: 'MILESTONE', unit: 'p', project: { title: '아주 작은 습관의 힘', total: 340, current: 45 }, completedCount: 0 }
+        { id: 'h3', title: '독서하기', trigger: '취침 30분 전 스마트폰 끄기', type: 'MILESTONE', unit: '페이지', project: { title: '아주 작은 습관의 힘', total: 340, current: 45 }, completedCount: 0 }
       ],
       logs: {}
     };
@@ -125,16 +233,16 @@
 
     function getStorage() {
       try {
-        var raw = localStorage.getItem('atomic_app_v1');
+        var raw = localStorage.getItem('atomic_app_v2');
         if (raw) return JSON.parse(raw);
-      } catch (err) {}
+      } catch (e) {}
       return defaultState;
     }
 
     function setStorage(data) {
       try {
-        localStorage.setItem('atomic_app_v1', JSON.stringify(data));
-      } catch (err) {}
+        localStorage.setItem('atomic_app_v2', JSON.stringify(data));
+      } catch (e) {}
     }
 
     function getTodayKey() {
@@ -145,8 +253,7 @@
     function initDate() {
       var d = new Date();
       var days = ['일', '월', '화', '수', '목', '금', '토'];
-      var text = (d.getMonth() + 1) + '월 ' + d.getDate() + '일 (' + days[d.getDay()] + ')';
-      document.getElementById('current-date').innerText = text;
+      document.getElementById('current-date').innerText = (d.getMonth() + 1) + '월 ' + d.getDate() + '일 (' + days[d.getDay()] + ')';
     }
 
     function renderList() {
@@ -157,7 +264,7 @@
       container.innerHTML = '';
 
       if (!appState.habits || appState.habits.length === 0) {
-        container.innerHTML = '<div style="text-align:center; padding: 40px; color: #6b7280;">등록된 습관이 없습니다.<br>우측 하단 [+] 버튼을 눌러 첫 습관을 등록하세요.</div>';
+        container.innerHTML = '<div style="text-align:center; padding: 50px 20px; color: var(--text-muted); font-size:0.95rem;">등록된 습관이 없습니다.<br>우측 하단 [+] 버튼을 눌러 첫 습관을 만들어보세요.</div>';
         return;
       }
 
@@ -169,38 +276,69 @@
 
         if (item.type === 'BOOLEAN') {
           actionHtml = '<div class="action-row">' +
-            '<span style="font-size:0.85rem; color:#4b5563;">오늘 실천 완료</span>' +
+            '<span style="font-size:0.88rem; font-weight:600; color:var(--text-muted);">' + (log.done ? '오늘 달성 완료 🎉' : '오늘 실천 여부') + '</span>' +
             '<button type="button" class="btn-check ' + (log.done ? 'done' : '') + '" onclick="doCheck(\'' + item.id + '\')">' + (log.done ? '✓' : '') + '</button>' +
             '</div>';
         } else if (item.type === 'METRIC_SUM') {
           actionHtml = '<div class="action-row">' +
-            '<span style="font-size:0.85rem; color:#4b5563;">오늘 기록: <strong style="color:#111827;">' + (log.value || 0) + '</strong> ' + item.unit + '</span>' +
+            '<span style="font-size:0.88rem; font-weight:600; color:var(--text-muted);">오늘 기록: <strong style="color:var(--text-main); font-size:1.05rem;">' + (log.value || 0) + '</strong> ' + item.unit + '</span>' +
             '<div class="input-row">' +
             '<input type="number" step="any" class="num-input" id="inp-' + item.id + '" placeholder="+' + item.unit + '">' +
-            '<button type="button" class="btn-sm" onclick="doMetric(\'' + item.id + '\')">추가</button>' +
+            '<button type="button" class="btn-action" onclick="doMetric(\'' + item.id + '\')">추가</button>' +
             '</div>' +
             '</div>';
         } else if (item.type === 'MILESTONE') {
           var p = item.project || { title: '목표 도서', total: 100, current: 0 };
           var pct = Math.min(100, Math.round((p.current / p.total) * 100));
-          actionHtml = '<div style="font-size:0.85rem; margin-top:6px; color:#1f2937;">진행 중: <strong>' + p.title + '</strong> (누적 ' + (item.completedCount || 0) + '권 완독)</div>' +
-            '<div class="progress-container"><div class="progress-bar" style="width:' + pct + '%"></div></div>' +
-            '<div class="progress-meta"><span>' + p.current + ' / ' + p.total + ' ' + item.unit + '</span><span>' + pct + '% 달성</span></div>' +
-            '<div class="action-row">' +
-            '<span style="font-size:0.85rem; color:#4b5563;">오늘 읽은 페이지:</span>' +
+          actionHtml = '<div class="milestone-box">' +
+            '<div style="font-size:0.85rem; font-weight:700;">📖 ' + p.title + ' <span style="font-size:0.75rem; color:var(--primary); font-weight:600;">(완독 ' + (item.completedCount || 0) + '권)</span></div>' +
+            '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + pct + '%"></div></div>' +
+            '<div class="progress-labels"><span>' + p.current + ' / ' + p.total + ' ' + item.unit + '</span><span>' + pct + '% 진행</span></div>' +
+            '<div class="action-row" style="margin-top:10px;">' +
+            '<span style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">현재 도달 페이지:</span>' +
             '<div class="input-row">' +
             '<input type="number" class="num-input" id="inp-' + item.id + '" placeholder="' + p.current + '">' +
-            '<button type="button" class="btn-sm" onclick="doMilestone(\'' + item.id + '\')">반영</button>' +
+            '<button type="button" class="btn-action" onclick="doMilestone(\'' + item.id + '\')">반영</button>' +
             '</div>' +
-            '</div>';
+            '</div></div>';
         }
 
         var badgeText = item.type === 'BOOLEAN' ? '단순체크' : item.type === 'METRIC_SUM' ? '수치누적' : '목표완독';
-        card.innerHTML = '<div class="card-top"><div><div class="card-title">' + item.title + '</div>' +
-          (item.trigger ? '<div class="card-trigger">⚡ ' + item.trigger + '</div>' : '') +
-          '</div><span class="card-badge">' + badgeText + '</span></div>' + actionHtml;
+        
+        card.innerHTML = '<div class="card-top">' +
+          '<div>' +
+            '<div class="card-title">' + item.title + '</div>' +
+            (item.trigger ? '<div class="card-trigger">⚡ ' + item.trigger + '</div>' : '') +
+          '</div>' +
+          '<div style="display:flex; align-items:center; gap:6px;">' +
+            '<span class="card-badge badge-' + item.type + '">' + badgeText + '</span>' +
+            '<button type="button" class="card-menu-btn" onclick="openEditModal(\'' + item.id + '\')">⋮</button>' +
+          '</div>' +
+        '</div>' + actionHtml;
 
         container.appendChild(card);
+      });
+    }
+
+    function renderStats() {
+      var summaryBox = document.getElementById('stats-summary');
+      summaryBox.innerHTML = '';
+      
+      appState.habits.forEach(function(h) {
+        var row = document.createElement('div');
+        row.style.cssText = 'padding:10px 14px; background:#f8fafc; border-radius:10px; font-size:0.9rem; display:flex; justify-content:space-between; align-items:center;';
+        
+        var valText = '';
+        if (h.type === 'BOOLEAN') {
+          valText = '매일 실천 관리 중';
+        } else if (h.type === 'METRIC_SUM') {
+          valText = '단위: ' + h.unit;
+        } else if (h.type === 'MILESTONE') {
+          valText = '총 ' + (h.completedCount || 0) + '권 완독 달성';
+        }
+
+        row.innerHTML = '<strong>' + h.title + '</strong><span style="font-size:0.85rem; color:var(--primary); font-weight:700;">' + valText + '</span>';
+        summaryBox.appendChild(row);
       });
     }
 
@@ -239,7 +377,7 @@
 
       if (habit.project.current >= habit.project.total) {
         habit.completedCount = (habit.completedCount || 0) + 1;
-        alert("🎉 축하합니다! 목표를 완독했습니다!");
+        alert("🎉 축하합니다! '" + habit.project.title + "'을(를) 완독했습니다!");
         habit.project.current = habit.project.total;
       }
 
@@ -247,60 +385,174 @@
       renderList();
     }
 
-    function setTab(type) {
+    /* Modal & Habit Management */
+    function setType(type) {
       currentType = type;
-      document.getElementById('tab-bool').className = 'tab-btn' + (type === 'BOOLEAN' ? ' active' : '');
-      document.getElementById('tab-metric').className = 'tab-btn' + (type === 'METRIC_SUM' ? ' active' : '');
-      document.getElementById('tab-stone').className = 'tab-btn' + (type === 'MILESTONE' ? ' active' : '');
+      document.getElementById('t-bool').className = 'tab-btn' + (type === 'BOOLEAN' ? ' active' : '');
+      document.getElementById('t-metric').className = 'tab-btn' + (type === 'METRIC_SUM' ? ' active' : '');
+      document.getElementById('t-stone').className = 'tab-btn' + (type === 'MILESTONE' ? ' active' : '');
       document.getElementById('metric-fields').style.display = type === 'METRIC_SUM' ? 'block' : 'none';
       document.getElementById('milestone-fields').style.display = type === 'MILESTONE' ? 'block' : 'none';
     }
 
-    function addHabit() {
+    function openAddModal() {
+      document.getElementById('modal-title-text').innerText = '새 습관 등록';
+      document.getElementById('edit-habit-id').value = '';
+      document.getElementById('habit-title').value = '';
+      document.getElementById('habit-trigger').value = '';
+      document.getElementById('metric-unit').value = '';
+      document.getElementById('project-title').value = '';
+      document.getElementById('project-total').value = '';
+      document.getElementById('delete-btn').style.display = 'none';
+      document.getElementById('type-select-group').style.display = 'block';
+      setType('BOOLEAN');
+      document.getElementById('habit-modal').classList.add('active');
+    }
+
+    function openEditModal(id) {
+      var habit = appState.habits.find(function(h) { return h.id === id; });
+      if (!habit) return;
+
+      document.getElementById('modal-title-text').innerText = '습관 수정하기';
+      document.getElementById('edit-habit-id').value = habit.id;
+      document.getElementById('habit-title').value = habit.title;
+      document.getElementById('habit-trigger').value = habit.trigger || '';
+      document.getElementById('type-select-group').style.display = 'none'; // 유형은 고정
+      document.getElementById('delete-btn').style.display = 'block';
+
+      setType(habit.type);
+
+      if (habit.type === 'METRIC_SUM') {
+        document.getElementById('metric-unit').value = habit.unit || '';
+      } else if (habit.type === 'MILESTONE') {
+        document.getElementById('project-title').value = habit.project ? habit.project.title : '';
+        document.getElementById('project-total').value = habit.project ? habit.project.total : '';
+      }
+
+      document.getElementById('habit-modal').classList.add('active');
+    }
+
+    function closeHabitModal() {
+      document.getElementById('habit-modal').classList.remove('active');
+    }
+
+    function saveHabitForm() {
+      var id = document.getElementById('edit-habit-id').value;
       var title = document.getElementById('habit-title').value.trim();
       var trigger = document.getElementById('habit-trigger').value.trim();
+
       if (!title) {
-        alert('습관 이름을 입력하세요.');
+        alert('습관 이름을 입력해 주세요.');
         return;
       }
 
-      var item = { id: 'h_' + Date.now(), title: title, trigger: trigger, type: currentType };
-
-      if (currentType === 'METRIC_SUM') {
-        item.unit = document.getElementById('metric-unit').value.trim() || '회';
-      } else if (currentType === 'MILESTONE') {
-        item.unit = '페이지';
-        var pTitle = document.getElementById('project-title').value.trim() || '목표 도서';
-        var pTotal = parseInt(document.getElementById('project-total').value, 10) || 100;
-        item.project = { title: pTitle, total: pTotal, current: 0 };
-        item.completedCount = 0;
+      if (id) {
+        // Edit mode
+        var target = appState.habits.find(function(h) { return h.id === id; });
+        if (target) {
+          target.title = title;
+          target.trigger = trigger;
+          if (target.type === 'METRIC_SUM') {
+            target.unit = document.getElementById('metric-unit').value.trim() || '회';
+          } else if (target.type === 'MILESTONE') {
+            var pTitle = document.getElementById('project-title').value.trim() || '목표 도서';
+            var pTotal = parseInt(document.getElementById('project-total').value, 10) || 100;
+            if (!target.project) target.project = { current: 0 };
+            target.project.title = pTitle;
+            target.project.total = pTotal;
+          }
+        }
+      } else {
+        // Add mode
+        var newItem = { id: 'h_' + Date.now(), title: title, trigger: trigger, type: currentType };
+        if (currentType === 'METRIC_SUM') {
+          newItem.unit = document.getElementById('metric-unit').value.trim() || '회';
+        } else if (currentType === 'MILESTONE') {
+          newItem.unit = '페이지';
+          var pTitle = document.getElementById('project-title').value.trim() || '목표 도서';
+          var pTotal = parseInt(document.getElementById('project-total').value, 10) || 100;
+          newItem.project = { title: pTitle, total: pTotal, current: 0 };
+          newItem.completedCount = 0;
+        }
+        appState.habits.push(newItem);
       }
 
-      appState.habits.push(item);
       setStorage(appState);
-      document.getElementById('modal-overlay').classList.remove('active');
+      closeHabitModal();
       renderList();
-
-      document.getElementById('habit-title').value = '';
-      document.getElementById('habit-trigger').value = '';
     }
 
-    // Direct Synchronous Execution
+    function deleteHabit() {
+      var id = document.getElementById('edit-habit-id').value;
+      if (!id) return;
+      if (confirm('정말로 이 습관을 삭제하시겠습니까?')) {
+        appState.habits = appState.habits.filter(function(h) { return h.id !== id; });
+        setStorage(appState);
+        closeHabitModal();
+        renderList();
+      }
+    }
+
+    /* Google Books API for auto page count */
+    function searchBook() {
+      var query = document.getElementById('project-title').value.trim();
+      if (!query) {
+        alert('검색할 도서명을 입력해 주세요.');
+        return;
+      }
+
+      var url = 'https://www.googleapis.com/books/v1/volumes?q=' + encodeURIComponent(query) + '&maxResults=1';
+      fetch(url)
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          if (data.items && data.items.length > 0) {
+            var info = data.items[0].volumeInfo;
+            document.getElementById('project-title').value = info.title || query;
+            if (info.pageCount) {
+              document.getElementById('project-total').value = info.pageCount;
+              alert('도서 정보 적용 완료: ' + info.title + ' (총 ' + info.pageCount + '페이지)');
+            } else {
+              alert('도서는 찾았으나 페이지 수 정보가 없어 직접 입력이 필요합니다.');
+            }
+          } else {
+            alert('일치하는 도서 정보를 찾을 수 없습니다.');
+          }
+        })
+        .catch(function() {
+          alert('도서 정보 검색 중 연결 오류가 발생했습니다.');
+        });
+    }
+
+    /* Tips Modal */
+    function openTipsModal() { document.getElementById('tips-modal').classList.add('active'); }
+    function closeTipsModal() { document.getElementById('tips-modal').classList.remove('active'); }
+
+    /* Tab Switcher */
+    function switchTab(viewName) {
+      var navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(function(item) { item.classList.remove('active'); });
+
+      document.getElementById('view-today').classList.remove('active');
+      document.getElementById('view-stats').classList.remove('active');
+
+      if (viewName === 'today') {
+        navItems[0].classList.add('active');
+        document.getElementById('view-today').classList.add('active');
+        renderList();
+      } else {
+        navItems[1].classList.add('active');
+        document.getElementById('view-stats').classList.add('active');
+        renderStats();
+      }
+    }
+
+    // Direct synchronous execution
     try {
       appState = getStorage();
       initDate();
       renderList();
 
-      var overlay = document.getElementById('modal-overlay');
-      document.getElementById('open-modal-btn').onclick = function() {
-        overlay.classList.add('active');
-      };
-      document.getElementById('close-modal-btn').onclick = function() {
-        overlay.classList.remove('active');
-      };
-      overlay.onclick = function(e) {
-        if (e.target === overlay) overlay.classList.remove('active');
-      };
+      document.getElementById('open-add-btn').onclick = openAddModal;
     } catch (e) {
       document.getElementById('current-date').innerText = '오류: ' + e.message;
     }
