@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="color-scheme" content="light">
   <title>Atomic Habits Tracker</title>
+  
+  <!-- High-Res Vector App Icon for Mobile Home Screen -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='128' fill='%234f46e5'/><circle cx='256' cy='256' r='48' fill='%23ffffff'/><ellipse cx='256' cy='256' rx='160' ry='64' fill='none' stroke='%2338bdf8' stroke-width='24' transform='rotate(30 256 256)'/><ellipse cx='256' cy='256' rx='160' ry='64' fill='none' stroke='%23a7f3d0' stroke-width='24' transform='rotate(-30 256 256)'/><path d='M220 256l24 24 48-48' fill='none' stroke='%234f46e5' stroke-width='16' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='128' fill='%234f46e5'/><circle cx='256' cy='256' r='48' fill='%23ffffff'/><ellipse cx='256' cy='256' rx='160' ry='64' fill='none' stroke='%2338bdf8' stroke-width='24' transform='rotate(30 256 256)'/><ellipse cx='256' cy='256' rx='160' ry='64' fill='none' stroke='%23a7f3d0' stroke-width='24' transform='rotate(-30 256 256)'/><path d='M220 256l24 24 48-48' fill='none' stroke='%234f46e5' stroke-width='16' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+
   <style>
     :root {
       --bg: #f4f6f9;
@@ -12,7 +17,6 @@
       --primary: #4f46e5;
       --primary-light: #eef2ff;
       --success: #10b981;
-      --success-light: #ecfdf5;
       --text-main: #0f172a;
       --text-muted: #64748b;
       --border: #e2e8f0;
@@ -21,7 +25,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg); color: var(--text-main); padding-bottom: 95px; }
 
-    /* Header */
     header { background: var(--surface); padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; box-shadow: 0 1px 4px rgba(0,0,0,0.03); }
     .header-title { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.5px; }
     .date-str { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
@@ -31,8 +34,6 @@
     .btn-preset { background: #e0e7ff; color: #3730a3; }
 
     .container { max-width: 480px; margin: 0 auto; padding: 16px; }
-
-    /* View Sections */
     .view-section { display: none; }
     .view-section.active { display: block; }
 
@@ -47,7 +48,6 @@
     .badge-MILESTONE { background: #ffedd5; color: #c2410c; }
     .card-menu-btn { border: none; background: transparent; font-size: 1.2rem; color: var(--text-muted); cursor: pointer; padding: 0 4px; }
 
-    /* Controls */
     .action-row { margin-top: 14px; display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 10px 14px; border-radius: 12px; }
     .btn-check { width: 42px; height: 42px; border-radius: 50%; border: 2px solid #cbd5e1; background: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.3rem; transition: all 0.2s; }
     .btn-check.done { background: var(--success); border-color: var(--success); color: #fff; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3); }
@@ -57,23 +57,34 @@
     .num-input:focus { border-color: var(--primary); }
     .btn-action { padding: 9px 14px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
 
-    /* Milestone Progress */
     .progress-bar-bg { width: 100%; background: #e2e8f0; height: 10px; border-radius: 5px; overflow: hidden; margin: 8px 0; }
     .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #4f46e5, #06b6d4); width: 0%; transition: width 0.4s ease; }
     .progress-labels { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
 
     /* Grass Stats */
     .grass-container { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin: 12px 0 16px 0; }
-    .grass-cell { aspect-ratio: 1; border-radius: 6px; background: #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.65rem; color: #475569; font-weight: 600; }
+    .grass-cell { aspect-ratio: 1; border-radius: 6px; background: #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.65rem; color: #475569; font-weight: 600; cursor: pointer; border: 1px solid transparent; }
+    .grass-cell:active { border-color: var(--primary); transform: scale(0.95); }
     .grass-lvl-0 { background: #e2e8f0; }
     .grass-lvl-1 { background: #bbf7d0; color: #166534; }
     .grass-lvl-2 { background: #4ade80; color: #14532d; }
     .grass-lvl-3 { background: #16a34a; color: #ffffff; }
 
-    /* FAB */
-    .fab { position: fixed; bottom: 84px; right: 20px; width: 56px; height: 56px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; border: none; box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4); cursor: pointer; z-index: 90; }
+    /* Filter Chips */
+    .filter-group { display: flex; gap: 6px; margin-bottom: 14px; }
+    .filter-chip { padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; border: 1px solid var(--border); background: #fff; color: var(--text-muted); cursor: pointer; }
+    .filter-chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-    /* Bottom Nav */
+    /* Clickable Stat Item */
+    .stat-row-item { padding: 12px 14px; background: #f8fafc; border-radius: 12px; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
+    .stat-row-item:active { background: #eef2ff; }
+
+    /* Compact Backup Bar */
+    .compact-backup-bar { display: flex; justify-content: center; gap: 16px; margin-top: 16px; padding: 10px; font-size: 0.8rem; color: var(--text-muted); }
+    .compact-backup-btn { background: none; border: none; color: var(--text-muted); text-decoration: underline; font-size: 0.8rem; cursor: pointer; font-weight: 600; }
+
+    /* FAB & Nav */
+    .fab { position: fixed; bottom: 84px; right: 20px; width: 56px; height: 56px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; border: none; box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4); cursor: pointer; z-index: 90; }
     .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 68px; background: var(--surface); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 100; }
     .nav-item { flex: 1; text-align: center; background: none; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; padding: 8px 0; }
     .nav-item.active { color: var(--primary); font-weight: 800; }
@@ -98,18 +109,14 @@
     .btn-submit { width: 100%; padding: 14px; background: var(--primary); color: #fff; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; }
     .btn-delete { width: 100%; padding: 12px; background: #fee2e2; color: var(--danger); border: none; border-radius: 12px; font-size: 0.95rem; font-weight: 700; cursor: pointer; margin-top: 8px; }
 
-    /* Presets list */
     .preset-item { border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; }
     .preset-info-title { font-weight: 700; font-size: 0.95rem; }
     .preset-info-trigger { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
     .btn-preset-add { padding: 6px 12px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
 
-    /* Tips & Backup */
     .tip-card { background: #f8fafc; border-left: 4px solid var(--primary); padding: 12px; border-radius: 0 10px 10px 0; margin-bottom: 12px; }
     .tip-title { font-weight: 700; font-size: 0.95rem; color: var(--primary); margin-bottom: 4px; }
     .tip-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
-    
-    .btn-backup { padding: 12px; border-radius: 10px; border: 1.5px solid var(--border); background: #fff; font-weight: 700; font-size: 0.9rem; cursor: pointer; width: 100%; margin-bottom: 8px; }
   </style>
 </head>
 <body>
@@ -130,24 +137,34 @@
     <div id="habit-list"></div>
   </main>
 
-  <!-- View 2: Stats & Backup -->
+  <!-- View 2: Stats & Details -->
   <main class="container view-section" id="view-stats">
+    <!-- Overall Grass -->
     <div class="card">
-      <div class="card-title">🌱 최근 4주 실천 잔디 (28일)</div>
-      <p style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">일일 실천 횟수에 따라 색상이 진해집니다.</p>
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div class="card-title">🌱 최근 4주 전체 잔디</div>
+        <span style="font-size:0.75rem; color:var(--text-muted);">날짜 클릭 시 상세 조회</span>
+      </div>
       <div class="grass-container" id="grass-grid"></div>
     </div>
 
+    <!-- Habit Summaries with Period Filters -->
     <div class="card">
-      <div class="card-title" style="margin-bottom:8px;">📊 습관별 누적 통계</div>
+      <div class="card-title" style="margin-bottom:10px;">📊 습관별 누적 통계</div>
+      <div class="filter-group">
+        <button type="button" class="filter-chip active" onclick="setPeriodFilter('ALL')">전체</button>
+        <button type="button" class="filter-chip" onclick="setPeriodFilter('YEAR')">올해</button>
+        <button type="button" class="filter-chip" onclick="setPeriodFilter('MONTH')">이번 달</button>
+        <button type="button" class="filter-chip" onclick="setPeriodFilter('WEEK')">이번 주</button>
+      </div>
       <div id="stats-summary" style="display:flex; flex-direction:column; gap:8px;"></div>
     </div>
 
-    <div class="card">
-      <div class="card-title" style="margin-bottom:8px;">💾 데이터 백업 및 복원</div>
-      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:12px;">휴대폰을 변경할 때 기록을 파일로 내려받아 옮길 수 있습니다.</p>
-      <button type="button" class="btn-backup" onclick="exportData()">📥 백업 파일 다운로드 (.json)</button>
-      <button type="button" class="btn-backup" onclick="document.getElementById('file-input').click()">📤 백업 파일 복원하기</button>
+    <!-- Compact Backup Controls -->
+    <div class="compact-backup-bar">
+      <button type="button" class="compact-backup-btn" onclick="exportData()">📥 데이터 백업</button>
+      <span>|</span>
+      <button type="button" class="compact-backup-btn" onclick="document.getElementById('file-input').click()">📤 복원</button>
       <input type="file" id="file-input" style="display:none;" accept=".json" onchange="importData(event)">
     </div>
   </main>
@@ -219,6 +236,36 @@
     </div>
   </div>
 
+  <!-- Day Detail Modal (On Grass Click) -->
+  <div class="modal-overlay" id="day-modal">
+    <div class="modal-content modal-box">
+      <div class="modal-header">
+        <span id="day-modal-date">일별 실천 상세</span>
+        <button type="button" class="close-btn" onclick="closeDayModal()">✕</button>
+      </div>
+      <div id="day-modal-content" style="display:flex; flex-direction:column; gap:8px;"></div>
+    </div>
+  </div>
+
+  <!-- Habit Specific Detail Modal -->
+  <div class="modal-overlay" id="habit-detail-modal">
+    <div class="modal-content modal-box">
+      <div class="modal-header">
+        <span id="detail-habit-title">습관 상세 분석</span>
+        <button type="button" class="close-btn" onclick="closeHabitDetailModal()">✕</button>
+      </div>
+      <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;" id="detail-habit-start"></div>
+      <div class="card" style="padding:14px; margin-bottom:12px;">
+        <div style="font-weight:700; font-size:0.9rem; margin-bottom:6px;">단독 실천 잔디 (최근 28일)</div>
+        <div class="grass-container" id="habit-single-grass"></div>
+      </div>
+      <div id="detail-book-section" style="display:none; margin-bottom:12px;">
+        <div style="font-weight:700; font-size:0.9rem; margin-bottom:6px;">📚 완독한 도서 목록</div>
+        <div id="detail-book-list" style="display:flex; flex-direction:column; gap:6px;"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Recommendation Presets Modal -->
   <div class="modal-overlay" id="preset-modal">
     <div class="modal-content modal-box">
@@ -246,20 +293,21 @@
 
   <script>
     var currentType = 'BOOLEAN';
+    var selectedPeriod = 'ALL';
 
     var presets = [
       { title: '아침 이부자리 정리', trigger: '기상하여 침대에서 발을 딛자마자', type: 'BOOLEAN' },
       { title: '가벼운 스트레칭', trigger: '기상 후 기지개를 켜며', type: 'METRIC_SUM', unit: '분' },
       { title: '매일 야외 달리기', trigger: '퇴근 후 운동화 끈을 묶은 직후', type: 'METRIC_SUM', unit: 'km' },
-      { title: '잠들기 전 독서', trigger: '스마트폰을 머리맡 충전기에 꽂은 직후', type: 'MILESTONE', unit: '페이지', project: { title: '아주 작은 습관의 힘', total: 340, current: 0 }, completedCount: 0 },
+      { title: '잠들기 전 독서', trigger: '스마트폰을 충전기에 꽂은 직후', type: 'MILESTONE', unit: '페이지', project: { title: '아주 작은 습관의 힘', total: 340, current: 0 }, completedCount: 0, completedBooks: [] },
       { title: '오늘의 감사 일기 3줄', trigger: '취침 전 침대에 누웠을 때', type: 'BOOLEAN' }
     ];
 
     var defaultState = {
       habits: [
-        { id: 'h1', title: '아침 찬물 한 잔', trigger: '기상 직후 부엌으로 갔을 때', type: 'BOOLEAN' },
-        { id: 'h2', title: '야외 러닝', trigger: '퇴근 직후 운동화 착용하기', type: 'METRIC_SUM', unit: 'km' },
-        { id: 'h3', title: '독서하기', trigger: '취침 30분 전 스마트폰 끄기', type: 'MILESTONE', unit: '페이지', project: { title: '아주 작은 습관의 힘', total: 340, current: 45 }, completedCount: 0 }
+        { id: 'h1', title: '아침 찬물 한 잔', trigger: '기상 직후 부엌으로 갔을 때', type: 'BOOLEAN', createdAt: '2026-10-01' },
+        { id: 'h2', title: '야외 러닝', trigger: '퇴근 직후 운동화 착용하기', type: 'METRIC_SUM', unit: 'km', createdAt: '2026-10-01' },
+        { id: 'h3', title: '독서하기', trigger: '취침 30분 전 스마트폰 끄기', type: 'MILESTONE', unit: '페이지', project: { title: '아주 작은 습관의 힘', total: 340, current: 45 }, completedCount: 1, completedBooks: ['도둑맞은 집중력'], createdAt: '2026-10-01' }
       ],
       logs: {}
     };
@@ -268,17 +316,17 @@
 
     function getStorage() {
       try {
-        var raw = localStorage.getItem('atomic_app_v3');
+        var raw = localStorage.getItem('atomic_app_v4');
         if (raw) return JSON.parse(raw);
-        var v2 = localStorage.getItem('atomic_app_v2');
-        if (v2) return JSON.parse(v2);
+        var v3 = localStorage.getItem('atomic_app_v3') || localStorage.getItem('atomic_app_v2');
+        if (v3) return JSON.parse(v3);
       } catch (e) {}
       return defaultState;
     }
 
     function setStorage(data) {
       try {
-        localStorage.setItem('atomic_app_v3', JSON.stringify(data));
+        localStorage.setItem('atomic_app_v4', JSON.stringify(data));
       } catch (e) {}
     }
 
@@ -357,8 +405,8 @@
       });
     }
 
-    function renderStats() {
-      // 1. Render 28-day Grass
+    /* Overall Grass & Day Modal */
+    function renderOverallGrass() {
       var grid = document.getElementById('grass-grid');
       grid.innerHTML = '';
       var today = new Date();
@@ -378,39 +426,149 @@
         var cell = document.createElement('div');
         cell.className = 'grass-cell grass-lvl-' + lvl;
         cell.innerText = (d.getMonth() + 1) + '/' + d.getDate();
+        cell.setAttribute('onclick', 'openDayDetailModal("' + key + '")');
         grid.appendChild(cell);
       }
+    }
 
-      // 2. Render Habit Summaries
+    function openDayDetailModal(dateKey) {
+      document.getElementById('day-modal-date').innerText = dateKey + ' 실천 내역';
+      var contentBox = document.getElementById('day-modal-content');
+      contentBox.innerHTML = '';
+
+      var dayLogs = appState.logs[dateKey] || {};
+      var hasAny = false;
+
+      appState.habits.forEach(function(h) {
+        var log = dayLogs[h.id];
+        if (log && log.done) {
+          hasAny = true;
+          var row = document.createElement('div');
+          row.style.cssText = 'padding:10px 14px; background:#f8fafc; border-radius:10px; font-size:0.9rem; display:flex; justify-content:space-between; align-items:center;';
+          var detail = h.type === 'BOOLEAN' ? '✓ 완료' : h.type === 'METRIC_SUM' ? (log.value || 0) + ' ' + h.unit : (log.value || 0) + ' 페이지';
+          row.innerHTML = '<strong>' + h.title + '</strong><span style="color:var(--success); font-weight:700;">' + detail + '</span>';
+          contentBox.appendChild(row);
+        }
+      });
+
+      if (!hasAny) {
+        contentBox.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:0.85rem;">실천한 기록이 없습니다.</div>';
+      }
+
+      document.getElementById('day-modal').classList.add('active');
+    }
+    function closeDayModal() { document.getElementById('day-modal').classList.remove('active'); }
+
+    /* Period Filtered Summaries */
+    function setPeriodFilter(period) {
+      selectedPeriod = period;
+      var chips = document.querySelectorAll('.filter-chip');
+      chips.forEach(function(c) { c.classList.remove('active'); });
+      event.target.classList.add('active');
+      renderStats();
+    }
+
+    function isDateInPeriod(dateStr, period) {
+      if (period === 'ALL') return true;
+      var target = new Date(dateStr);
+      var now = new Date();
+
+      if (period === 'YEAR') {
+        return target.getFullYear() === now.getFullYear();
+      } else if (period === 'MONTH') {
+        return target.getFullYear() === now.getFullYear() && target.getMonth() === now.getMonth();
+      } else if (period === 'WEEK') {
+        var dayDiff = (now - target) / (1000 * 60 * 60 * 24);
+        return dayDiff >= 0 && dayDiff <= 7;
+      }
+      return true;
+    }
+
+    function renderStats() {
+      renderOverallGrass();
+
       var summaryBox = document.getElementById('stats-summary');
       summaryBox.innerHTML = '';
       
       appState.habits.forEach(function(h) {
         var row = document.createElement('div');
-        row.style.cssText = 'padding:10px 14px; background:#f8fafc; border-radius:10px; font-size:0.9rem; display:flex; justify-content:space-between; align-items:center;';
+        row.className = 'stat-row-item';
+        row.setAttribute('onclick', 'openHabitDetailModal("' + h.id + '")');
         
         var valText = '';
         if (h.type === 'BOOLEAN') {
-          var totalDays = 0;
+          var count = 0;
           for (var k in appState.logs) {
-            if (appState.logs[k][h.id] && appState.logs[k][h.id].done) totalDays++;
+            if (isDateInPeriod(k, selectedPeriod) && appState.logs[k][h.id] && appState.logs[k][h.id].done) count++;
           }
-          valText = '총 ' + totalDays + '일 달성';
+          valText = count + '일 실천';
         } else if (h.type === 'METRIC_SUM') {
           var sumVal = 0;
           for (var k in appState.logs) {
-            if (appState.logs[k][h.id] && appState.logs[k][h.id].value) sumVal += appState.logs[k][h.id].value;
+            if (isDateInPeriod(k, selectedPeriod) && appState.logs[k][h.id] && appState.logs[k][h.id].value) sumVal += appState.logs[k][h.id].value;
           }
-          valText = '누적 ' + sumVal + ' ' + h.unit;
+          valText = sumVal + ' ' + h.unit;
         } else if (h.type === 'MILESTONE') {
-          valText = '총 ' + (h.completedCount || 0) + '권 완독';
+          valText = (h.completedCount || 0) + '권 완독';
         }
 
-        row.innerHTML = '<strong>' + h.title + '</strong><span style="font-size:0.85rem; color:var(--primary); font-weight:700;">' + valText + '</span>';
+        row.innerHTML = '<div><strong>' + h.title + '</strong><span style="font-size:0.75rem; color:var(--text-muted); display:block;">시작일: ' + (h.createdAt || '미기록') + '</span></div>' +
+          '<div style="text-align:right;"><span style="font-size:0.9rem; color:var(--primary); font-weight:700;">' + valText + '</span><span style="color:var(--text-muted); font-size:0.8rem; margin-left:4px;">›</span></div>';
         summaryBox.appendChild(row);
       });
     }
 
+    /* Single Habit Detail Modal */
+    function openHabitDetailModal(habitId) {
+      var habit = appState.habits.find(function(h) { return h.id === habitId; });
+      if (!habit) return;
+
+      document.getElementById('detail-habit-title').innerText = habit.title;
+      document.getElementById('detail-habit-start').innerText = '시작일: ' + (habit.createdAt || '초기 생성') + ' | ' + (habit.trigger ? '신호: ' + habit.trigger : '');
+
+      // Single habit grass
+      var grass = document.getElementById('habit-single-grass');
+      grass.innerHTML = '';
+      var today = new Date();
+
+      for (var i = 27; i >= 0; i--) {
+        var d = new Date();
+        d.setDate(today.getDate() - i);
+        var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        var done = appState.logs[key] && appState.logs[key][habit.id] && appState.logs[key][habit.id].done;
+
+        var cell = document.createElement('div');
+        cell.className = 'grass-cell ' + (done ? 'grass-lvl-3' : 'grass-lvl-0');
+        cell.innerText = (d.getMonth() + 1) + '/' + d.getDate();
+        grass.appendChild(cell);
+      }
+
+      // Book list section
+      var bookSec = document.getElementById('detail-book-section');
+      if (habit.type === 'MILESTONE') {
+        bookSec.style.display = 'block';
+        var bList = document.getElementById('detail-book-list');
+        bList.innerHTML = '';
+        var books = habit.completedBooks || [];
+        if (books.length === 0) {
+          bList.innerHTML = '<div style="font-size:0.8rem; color:var(--text-muted);">완독 도서 히스토리가 없습니다.</div>';
+        } else {
+          books.forEach(function(b, idx) {
+            var bRow = document.createElement('div');
+            bRow.style.cssText = 'padding:8px 12px; background:#f1f5f9; border-radius:8px; font-size:0.85rem; font-weight:600;';
+            bRow.innerText = (idx + 1) + '. ' + b;
+            bList.appendChild(bRow);
+          });
+        }
+      } else {
+        bookSec.style.display = 'none';
+      }
+
+      document.getElementById('habit-detail-modal').classList.add('active');
+    }
+    function closeHabitDetailModal() { document.getElementById('habit-detail-modal').classList.remove('active'); }
+
+    /* Action Handlers */
     function doCheck(id) {
       var key = getTodayKey();
       if (!appState.logs[key]) appState.logs[key] = {};
@@ -446,6 +604,8 @@
 
       if (habit.project.current >= habit.project.total) {
         habit.completedCount = (habit.completedCount || 0) + 1;
+        if (!habit.completedBooks) habit.completedBooks = [];
+        habit.completedBooks.push(habit.project.title);
         alert("🎉 축하합니다! '" + habit.project.title + "'을(를) 완독했습니다!");
         habit.project.current = habit.project.total;
       }
@@ -454,7 +614,6 @@
       renderList();
     }
 
-    /* Modal & Habit Form */
     function setType(type) {
       currentType = type;
       document.getElementById('t-bool').className = 'tab-btn' + (type === 'BOOLEAN' ? ' active' : '');
@@ -529,7 +688,13 @@
           }
         }
       } else {
-        var newItem = { id: 'h_' + Date.now(), title: title, trigger: trigger, type: currentType };
+        var newItem = { 
+          id: 'h_' + Date.now(), 
+          title: title, 
+          trigger: trigger, 
+          type: currentType,
+          createdAt: getTodayKey()
+        };
         if (currentType === 'METRIC_SUM') {
           newItem.unit = document.getElementById('metric-unit').value.trim() || '회';
         } else if (currentType === 'MILESTONE') {
@@ -538,6 +703,7 @@
           var pTotal = parseInt(document.getElementById('project-total').value, 10) || 100;
           newItem.project = { title: pTitle, total: pTotal, current: 0 };
           newItem.completedCount = 0;
+          newItem.completedBooks = [];
         }
         appState.habits.push(newItem);
       }
@@ -577,6 +743,7 @@
       var p = presets[idx];
       var copy = JSON.parse(JSON.stringify(p));
       copy.id = 'h_' + Date.now();
+      copy.createdAt = getTodayKey();
       appState.habits.push(copy);
       setStorage(appState);
       closePresetModal();
@@ -584,7 +751,7 @@
       alert("'" + copy.title + "' 습관이 목록에 추가되었습니다.");
     }
 
-    /* Backup & Restore (JSON) */
+    /* Compact Backup / Restore */
     function exportData() {
       var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
       var dlAnchor = document.createElement('a');
@@ -612,13 +779,12 @@
             alert("올바른 백업 파일 형식이 아닙니다.");
           }
         } catch (err) {
-          alert("파일을 읽는 중 오류가 발생했습니다.");
+          alert("파일 읽기 오류가 발생했습니다.");
         }
       };
       reader.readAsText(file);
     }
 
-    /* Book search */
     function searchBook() {
       var q = document.getElementById('project-title').value.trim();
       if (!q) { alert('도서명을 입력하세요.'); return; }
@@ -636,7 +802,6 @@
         });
     }
 
-    /* Modals & Switcher */
     function openTipsModal() { document.getElementById('tips-modal').classList.add('active'); }
     function closeTipsModal() { document.getElementById('tips-modal').classList.remove('active'); }
 
@@ -657,7 +822,6 @@
       }
     }
 
-    // Init Execution
     try {
       appState = getStorage();
       initDate();
